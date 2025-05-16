@@ -153,7 +153,7 @@
                 type="video/mp4">
       </video>
       <h2 class="subtitle has-text-centered">
-        Corridor (shown in <span style="background: linear-gradient(to right, rgba(255, 0, 0, 0.737), violet, orange, yellow); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold;">gradient color</span>) constrains driving trajectories to prevent collisions.
+        Perception-aware Decision-making under Dynamic Occlusions
       </h2>
     </div>
   </div>
@@ -168,21 +168,17 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Safety remains one of the most critical challenges in autonomous driving systems.
-            In recent years, the end-to-end driving has shown great promise in advancing vehicle autonomy in a scalable manner.
-            However, existing approaches often face safety risks due to the lack of explicit behavior constraints.
+          One of the unresolved challenges for autonomous vehicles is occlusion-aware decision-making under the high uncertainty of various occlusions. 
+          Recent occlusion-aware decision-making methods encounter issues such as overly conservative behavior, high computational complexity, or scenario scalability challenges. 
           </p>
           <p>
-            To address this issue, we uncover a new paradigm by introducing the corridor as the intermediate representation.
-            Widely adopted in robotics planning, the corridors represents spatio-temporal obstacle-free zones for the vehicle to traverse.
-            To ensure accurate corridor prediction in diverse traffic scenarios, we develop a comprehensive learning pipeline including data annotation, architecture refinement and loss formulation.
-            The predicted corridor is further integrated as the constraint in a trajectory optimization process.
-            By extending the differentiability of the optimization, we enable the optimized trajectory to be seamlessly trained within the end-to-end learning framework, improving both safety and interpretability.
+          Benefiting from automatically generating data by exploration randomization, we uncover that reinforcement learning (RL) may show promise in occlusion-aware decision-making. 
+          However, previous occlusion-aware RL faces challenges in expanding to various dynamic and static occlusion scenarios, low learning efficiency, and lack of predictive ability.
+          To address these issues, we introduce Pad-AI, a self-reinforcing framework to learn occlusion-aware decision-making through active perception. Pad-AI utilizes vectorized representation to represent occluded environments efficiently and learns over the semantic motion primitives to focus on high-level active perception exploration. 
+          Furthermore, Pad-AI integrates prediction and RL within a unified framework to provide riskaware learning and reliable policy optimization. 
           </p>
           <p>
-            Experimental results on the nuScenes dataset demonstrate state-of-the-art performance of our approach, 
-            showing a 66.7% reduction in collisions with agents and a 46.5% reduction with curbs, significantly enhancing the safety of end-to-end driving. 
-            Additionally, incorporating the corridor contributes to higher success rates in closed-loop evaluations.
+          Our framework was tested in challenging scenarios under both dynamic and static occlusions and demonstrated efficient perception-aware exploration performance to other strong baselines in closedloop evaluations.
           </p>
         </div>
       </div>
@@ -193,12 +189,14 @@
     <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
       <h2 class="title is-3">Framework</h2>
-        <img src="./static/images/pipeline5.png"
+        <img src="./static/images/framework.png"
             class="interpolation-image"
             alt="System Architecture Pipeline."/>
         <div class="content has-text-justified">
           <p>
-            The learning pipeline of our framework employs multiple loss functions to supervise the predicted corridor. A differentiable optimization module, integrated into the network, refines the trajectory within the corridor to produce the final plan.
+            Schematic architecture: Vectorized observations from the occluded environment are encoded through a graph neural network. 
+            The actor decodes parameterized action probabilities, which are further mapped to the semantic motion primitives. 
+            A safe interaction mechanism is engaged to avoid risky motion primitive exploration and risk-aware policy learning.
           </p>
         </div>
       </div>
